@@ -59,6 +59,8 @@ model Item {
   price     Decimal
   deal      Deal     @relation(fields: [dealId], references: [id])
   dealId    Int
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Deal {
@@ -72,4 +74,6 @@ model Deal {
   discountType String?
   discountAmount Decimal?
   items    Item[]
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
