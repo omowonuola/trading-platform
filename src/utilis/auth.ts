@@ -1,18 +1,18 @@
-import bcrypt from 'bcrypt';
+
+import * as bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 
 import dotenv from 'dotenv';
-dotenv.config();
+// dotenv.config();
 
 const SECRET_KEY = 'process.env.JWT_SECRET'
 
 
 export const hashPassword = async (password: string): Promise<string> => {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     return hashedPassword;
-}
-
+  };
 
 export const comparePasswords = async (password: string, hashedPassword: string): Promise<boolean> => {
     return await bcrypt.compare(password, hashedPassword);

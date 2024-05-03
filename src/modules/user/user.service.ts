@@ -12,17 +12,38 @@ import { CreateUserInput } from "./user.schema"
 // }
 export const createUser = async (input: CreateUserInput) => {
 
-    const { name, email, password } = input;
+    const { name, email, password, roleId } = input;
+
+      // Check if a user with the provided email already exists
+    const existingUser = await findUserByEmail(email)
+
+    if (existingUser) {
+        // User with the provided email already exists
+        throw new Error('User with this email already exists');
+    }
 
     const hashedPassword = await hashPassword(password)
 
-    try {
-        const user = await prisma.user.create({
-            data: { name, email, password: hashedPassword }
-        })
-        return user
-    } catch (error) {
-        console.error('unable to create user')
-    }
+    const user = await prisma.user.create({
+        data: { name, email, password: hashedPassword, roleId },
+        include: {
+            role: true,
+        },
+    })
+
+    const userWithRoleName = {
+        ...user,
+        roleName: user.role.name,
+    };
+
+    return userWithRoleName;
+}
+
+export const findUserByEmail = async (email: string) => {
+    return prisma.user.findUnique({
+        where: {
+            email,
+        }
+    })
 
 }

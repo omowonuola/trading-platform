@@ -1,5 +1,12 @@
 import Fastify from 'fastify';
 import dotenv from 'dotenv';
+import userRoutes from './modules/user/user.routes';
+import roleRoutes from './modules/role/role.routes';
+import { userSchemas } from './modules/user/user.schema';
+import { roleSchemas } from './modules/role/role.schema';
+
+
+
 dotenv.config();
 
 
@@ -10,13 +17,22 @@ server.get('/healthcheck', async () => {
 })
 
 const main = async () => {
-    try {
-        await server.listen.call(3000, '0.0.0.0')
-        console.log(`Server ready at http://localhost:3000`)
-    } catch (error) {
-        console.error(error)
-        process.exit(1)
+
+    for (const schema of [...userSchemas, ...roleSchemas]) {
+        server.addSchema(schema);
     }
+
+    server.register(userRoutes, { prefix: 'api/users'})
+    server.register(roleRoutes, { prefix: 'api/roles'})
+
+    server.listen({ port: 3000 }, (err, address) => {
+        if (err) {
+          console.error(err)
+          process.exit(1)
+        }
+        console.log(`Server listening at ${address}`)
+    })
 }
+
 
 main()
