@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { createSellerHandler } from './seller.controller'
+import { createSellerHandler, getAllSellerHandler } from './seller.controller'
 import { $ref } from './seller.schema'
 
 
@@ -12,6 +12,14 @@ const sellerRoutes = async (server: FastifyInstance) => {
             },
         },
     }, createSellerHandler)
+
+    server.get('/allSellers', {
+        schema: {
+            response: {
+                201: $ref('createSellerResponseSchema')
+            },
+        },
+    }, getAllSellerHandler)
 
 }
 

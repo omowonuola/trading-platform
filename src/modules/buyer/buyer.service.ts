@@ -6,7 +6,7 @@ import { CreateBuyerInput } from "./buyer.schema"
 
 
 
-export const createBuyer = async (input: CreateBuyerInput) => {
+export const createBuyerProfile = async (input: CreateBuyerInput) => {
 
     const { email, name } = input;
 
@@ -33,3 +33,21 @@ export const findBuyerByEmail = async (email: string) => {
     })
 
 }
+
+
+export const getAllBuyers = async (page: number, limit: number) => {
+    const skip = (page - 1) * limit;
+    const buyers = await prisma.buyer.findMany({
+      skip,
+      take: limit,
+    });
+   
+    const totalCount = await prisma.buyer.count();
+   
+    return {
+      data: buyers,
+      totalCount,
+      page,
+      limit,
+    };
+};

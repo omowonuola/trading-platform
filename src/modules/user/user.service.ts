@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "../../utilis/auth";
 import prisma from "../../utilis/prisma"
 import { CreateUserInput } from "./user.schema"
+import { createBuyerProfile } from "../buyer/buyer.service";
+import { createSellerProfile } from "../seller/seller.service";
 
 
 // export default class UserService {
@@ -31,10 +33,24 @@ export const createUser = async (input: CreateUserInput) => {
         },
     })
 
+    const roleName = user.role.name
+    const accountInput = {email, name}
+
+
     const userWithRoleName = {
         ...user,
-        roleName: user.role.name,
+        roleName,
     };
+
+    
+    // check if the user is a buyer or a seller and create their profile in the db
+    if (roleName === 'buyer') {
+        // create user profile
+        await createBuyerProfile(accountInput)
+    }  else if (roleName === 'seller') {
+        await createSellerProfile(accountInput);
+    }
+
 
     return userWithRoleName;
 }
