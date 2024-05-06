@@ -4,8 +4,8 @@ import { buildJsonSchemas } from 'fastify-zod'
 
 const createItemSchema = z.object({
     name: z.string(),
-    price: z.string(),
-    dealId: z.string()
+    price: z.number(),
+    dealId: z.number()
 })
 
 const createItemResponseSchema = z.object({
