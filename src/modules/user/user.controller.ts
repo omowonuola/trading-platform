@@ -43,9 +43,9 @@ export const loginHandler = async ( request: FastifyRequest<{
     )
 
     if(correctPassword) {
-        const { password, email, name} = user
+        const { email, name, id, roleId} = user
 
-        return {accessToken: generateToken(user)}
+        return {accessToken: generateToken({email, name, id, roleId })}
     }
 
     return reply.code(401).send({

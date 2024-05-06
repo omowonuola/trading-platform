@@ -55,7 +55,7 @@ model BuyerSeller {
 
 model Item {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String 
   price     Decimal
   deal      Deal     @relation(fields: [dealId], references: [id])
   dealId    Int
@@ -64,8 +64,8 @@ model Item {
 }
 
 model Deal {
-  id    Int @id @default(autoincrement())
-  name  String
+  id    Int  @id @default(autoincrement())
+  name  String @unique
   seller   Seller   @relation(fields: [sellerId], references: [id])
   sellerId  Int
   currency  String

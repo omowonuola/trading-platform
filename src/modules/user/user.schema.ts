@@ -37,6 +37,9 @@ const createUserResponseSchema = z.object({
     ...userCore
 })
 
+const createMiddlewareSchema = z.object({
+    id: z.number()
+})
 
 const loginSchema = z.object({
     email: z.string({
@@ -56,6 +59,8 @@ const loginResponseSchema = z.object({
 })
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
+
+export type CreateMiddlewareInput = z.infer<typeof createMiddlewareSchema>;
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
