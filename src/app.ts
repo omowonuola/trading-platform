@@ -10,6 +10,8 @@ import sellerRoutes from './modules/seller/seller.routes';
 import { sellerSchemas } from './modules/seller/seller.schema';
 import dealRoutes from './modules/deals/deal.routes';
 import { dealSchemas } from './modules/deals/deal.schema';
+import itemRoutes from './modules/item/item.routes';
+import { itemSchemas } from './modules/item/item.schema';
 
 
 
@@ -24,7 +26,7 @@ server.get('/healthcheck', async () => {
 
 const main = async () => {
 
-    for (const schema of [...userSchemas, ...roleSchemas, ...buyerSchemas, ...sellerSchemas, ...dealSchemas]) {
+    for (const schema of [...userSchemas, ...roleSchemas, ...buyerSchemas, ...sellerSchemas, ...dealSchemas, ...itemSchemas]) {
         server.addSchema(schema);
     }
 
@@ -33,6 +35,7 @@ const main = async () => {
     server.register(buyerRoutes, { prefix: 'api/buyer'})
     server.register(sellerRoutes, { prefix: 'api/seller'})
     server.register(dealRoutes, { prefix: 'api/deal'})
+    server.register(itemRoutes, { prefix: 'api/item'})
 
     server.listen({ port: 3000 }, (err, address) => {
         if (err) {

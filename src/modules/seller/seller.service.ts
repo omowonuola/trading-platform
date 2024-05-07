@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+
 import prisma from "../../utilis/prisma"
 import { CreateSellerInput } from "./seller.schema"
 
@@ -32,7 +32,8 @@ export const findSellerByEmail = async (email: string) => {
     return prisma.seller.findUnique({
         where: {
             email,
-        }
+        },
+        select: { id: true }
     })
 
 }
@@ -54,3 +55,10 @@ export const getAllSellers = async (page: number, limit: number) => {
       limit,
     };
 };
+
+// export const getSellerEmail = async (email: string) => {
+//     return prisma.seller.findUnique({
+//         where: { email },
+//         select: { id: true }
+//       });
+// }

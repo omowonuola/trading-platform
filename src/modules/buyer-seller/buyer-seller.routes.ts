@@ -15,7 +15,7 @@ const connectRoutes = async (fastify: FastifyInstance) => {
             200: $ref('connectResponseSchema'),
           },
         },
-        preHandler: [/* Add authentication middleware here */],
+        preHandler: [],
       },
       connectBuyerSellerHandler
     );

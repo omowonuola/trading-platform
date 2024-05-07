@@ -1,13 +1,24 @@
-import { FastifyRequest } from 'fastify';
-import { Prisma, User } from '@prisma/client';
+import { FastifyRequest, RouteGenericInterface } from 'fastify';
+import { CreateDealInput } from '../modules/deals/deal.schema';
+import { CreateItemInput } from '../modules/item/item.schema';
 
-export interface IUserRequest extends FastifyRequest {
-    body: Prisma.UserCreateInput
-    authUser: User
-}
+
 
 
 export interface DecodedToken {
     id: number;
     email: string;
+}
+
+
+export interface CreateDealBody extends RouteGenericInterface {
+    Body: CreateDealInput;
+}
+
+export interface CreateItemBody extends RouteGenericInterface {
+    Body: CreateItemInput;
+}
+
+export interface RequestWithUser extends RouteGenericInterface {
+    User: { id: number };
 }

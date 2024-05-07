@@ -48,7 +48,7 @@ try {
 };
 
 // isAuthenticated middleware
-export const isAuthenticated = async (request: FastifyRequest, reply: FastifyReply): Promise<object>  => {
+export const isAuthenticated = async (request: FastifyRequest, reply: FastifyReply): Promise<void>  => {
   try {
     // Get the JWT token from the request headers
     const token = request.headers.authorization?.split(' ')[1];
@@ -58,12 +58,30 @@ export const isAuthenticated = async (request: FastifyRequest, reply: FastifyRep
     }
 
     // Verify the JWT token
-   return await verifyToken(token);
+   const verify = await verifyToken(token);
 
   } catch (error) {
     return reply.code(401).send({ error: 'Unauthorized: Invalid token' });
   }
 };
+
+export const getUserId = async (request: FastifyRequest, reply: FastifyReply): Promise<any>  => {
+    try {
+      // Get the JWT token from the request headers
+      const token = request.headers.authorization?.split(' ')[1];
+  
+      if (!token) {
+        return reply.code(401).send({ error: 'Unauthorized: No token provided' });
+      }
+  
+      // Verify the JWT token
+     const verify = await verifyToken(token);
+     return verify
+     
+    } catch (error) {
+      return reply.code(401).send({ error: 'Unauthorized: Invalid token' });
+    }
+  };
 
 
 // isBuyer middleware

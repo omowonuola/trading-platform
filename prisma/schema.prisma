@@ -70,10 +70,14 @@ model Deal {
   sellerId  Int
   currency  String
   totalPrice Decimal
-  status String  
-  discountType String?
-  discountAmount Decimal?
+  status    DealStatus   @default(available) 
+  discount   Json? 
   items    Item[]
   createAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum DealStatus {
+  sold
+  available
 }

@@ -16,7 +16,7 @@ const createItemResponseSchema = z.object({
 export type CreateItemInput = z.infer<typeof createItemSchema>;
 
 
-export const { schemas: roleSchemas, $ref } = buildJsonSchemas({
+export const { schemas: itemSchemas, $ref } = buildJsonSchemas({
     createItemSchema,
     createItemResponseSchema
 }, 

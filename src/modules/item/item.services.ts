@@ -29,3 +29,14 @@ export const findItemByName = async (name: string, price: number) => {
     })
 
 }
+
+
+export const getItemsByUserId = async (id: number) => {
+    const items = await prisma.item.findMany({
+      where: {
+        id,
+      },
+    });
+  
+    return items;
+};
