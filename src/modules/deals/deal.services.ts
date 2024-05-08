@@ -41,16 +41,29 @@ export const getDealsByUserId = async (id: number) => {
     return deals;
 };
 
-// export const findDealByName = async (name: string) => {
-//     return prisma.deal.findUnique({
-//       where: {
-//         name: {
-//           equals: name,
-//           mode: 'insensitive',
-//         },
-//       },
-//     });
-//   };
+export const getDealsFromSeller = async (buyerId: number) => {
+  // Fetch the seller IDs that the buyer is connected to
+  const connectedSellers = await prisma.buyerSeller.findMany({
+    where: { buyerId },
+    select: { sellerId: true },
+  });
+
+  const connectedSellerIds = connectedSellers.map((seller:any) => seller.sellerId);
+
+  // Fetch the deals where the sellerId matches the connected sellers
+  const deals = await prisma.deal.findMany({
+    where: {
+      sellerId: {
+        in: connectedSellerIds,
+      },
+    },
+    include: {
+      items: true,
+    },
+  });
+
+  return deals;
+};
 
 export const findDealByName = async (name: string) => {
     return prisma.deal.findUnique({
