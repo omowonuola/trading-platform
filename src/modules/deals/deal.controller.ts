@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { createDeal, getDealsByUserId, getDealsFromSeller } from './deal.services';
-import { CreateDealInput } from './deal.schema';
-import { RequestWithUser } from '../../interface/userInterface';
+import { createDeal, getDealsByUserId, getDealsFromSeller, updateDeal } from './deal.services';
+import { CreateDealInput, UpdateDealInput } from './deal.schema';
+import { RequestWithUser, UpdateDealParams } from '../../interface/userInterface';
 import { getUserId } from '../../utilis/auth';
 import { findSellerByEmail } from '../seller/seller.service';
 import { findBuyerByEmail } from '../buyer/buyer.service';
@@ -74,3 +74,22 @@ export const getDealsFromSellerHandler = async ( request: FastifyRequest,
         reply.code(500).send(error);
     }
 }
+
+
+export const updateDealHandler = async (
+    request: FastifyRequest<{ Body: UpdateDealInput, Params: UpdateDealParams }>,
+    reply: FastifyReply
+  ) => {
+    const body = request.body;
+    const user = await getUserId(request, reply);
+    const sellerId = user.id;
+    const id = request.params.id;
+  
+    try {
+      const deal = await updateDeal(id, { ...body, sellerId });
+      return reply.code(201).send(deal);
+    } catch (error) {
+      console.error(error);
+      reply.code(500).send(error);
+    }
+  };

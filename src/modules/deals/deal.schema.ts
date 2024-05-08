@@ -41,7 +41,7 @@ const createDealResponseSchema = z.object({
 
 
 const updateDealInputSchema = z.object({
-    id: z.number().int().positive(), 
+    // id: z.number(), 
     name: z.string().optional(),
     currency: z.string().optional(),
     totalPrice: z.number().optional(),
@@ -56,7 +56,7 @@ const updateDealInputSchema = z.object({
     items: z
       .array(
         z.object({
-          id: z.number().int().positive().optional(),
+          id: z.number().optional(),
           name: z.string().optional(),
           price: z.number().optional(),
         })

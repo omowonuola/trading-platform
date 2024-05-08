@@ -1,5 +1,5 @@
 import prisma from "../../utilis/prisma"
-import { CreateDealInput } from "./deal.schema"
+import { CreateDealInput, UpdateDealInput } from "./deal.schema"
 
 
 
@@ -74,4 +74,34 @@ export const findDealByName = async (name: string) => {
 
 }
 
+export const updateDeal = async (id:number, input: UpdateDealInput & { sellerId: number }) => {
+  const {name, currency, totalPrice, status, discount, items, sellerId } = input;
 
+    // Check if the deal exists and is owned by the authenticated seller
+    const existingDeal = await prisma.deal.findUnique({
+        where: { id },
+        select: { sellerId: true },
+    });
+    
+    if (!existingDeal || existingDeal.sellerId !== sellerId) {
+        throw new Error('You are not authorized to update this deal');
+    }
+  const deal = await prisma.deal.update({
+    where: { id },
+    data: {
+      name,
+      currency,
+      totalPrice,
+      status,
+      discount,
+      items: {
+        updateMany: items?.map((item) => ({
+          where: { id: item.id },
+          data: { name: item.name, price: item.price },
+        })),
+      },
+    },
+  });
+
+  return deal;
+};
