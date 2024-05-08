@@ -39,9 +39,16 @@ const createDealResponseSchema = z.object({
     ...dealCore
 })
 
+const dealUpdateParamsSchema = z.object({
+    // type: 'object',
+    // properties: {
+    //   id: { type: 'number' },
+    // },
+    id: z.number(),
+});
+
 
 const updateDealInputSchema = z.object({
-    // id: z.number(), 
     name: z.string().optional(),
     currency: z.string().optional(),
     totalPrice: z.number().optional(),
@@ -74,12 +81,15 @@ const dealUpdateJobSchema = z.object({
 export type CreateDealInput = z.infer<typeof createDealSchema>;
 export type UpdateDealInput = z.infer<typeof updateDealInputSchema>
 export type DealUpdateJobData = z.infer<typeof dealUpdateJobSchema>
+export type DealUpdateParam = z.infer<typeof dealUpdateParamsSchema>
+
 
 export const { schemas: dealSchemas, $ref } = buildJsonSchemas({
     createDealSchema,
     createDealResponseSchema,
     updateDealInputSchema,
-    dealUpdateJobSchema
+    dealUpdateJobSchema,
+    dealUpdateParamsSchema
 }, 
     {
         $id: 'DealSchemas',

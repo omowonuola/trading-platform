@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { createBuyerProfile, findBuyerByEmail, getAllBuyers } from './buyer.service';
+import { createBuyerProfile, getAllBuyers } from './buyer.service';
 import { CreateBuyerInput } from './buyer.schema';
 
 export const createBuyerHandler = async ( request: FastifyRequest<{

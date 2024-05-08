@@ -1,13 +1,18 @@
 import { FastifyInstance } from 'fastify'
 import { createDealHandler, getDealsFromSellerHandler, getUserDealHandler, updateDealHandler } from './deal.controller'
-import { $ref, CreateDealInput } from './deal.schema'
+import { $ref, UpdateDealInput } from './deal.schema'
 import { isAuthenticated, isBuyer, isSeller } from '../../utilis/auth'
 import { CreateDealBody, UpdateDealBody, UpdateDealParams } from '../../interface/userInterface'
 import z from 'zod';
 
 
 
-
+const paramsSchema = {
+    type: 'object',
+    properties: {
+      id: { type: 'number' },
+    },
+};
 
 
 const dealRoutes = async (server: FastifyInstance) => {
@@ -40,7 +45,7 @@ const dealRoutes = async (server: FastifyInstance) => {
         },
     }, getDealsFromSellerHandler)
 
-    server.put<{ Body: UpdateDealBody, Params: UpdateDealParams }>(
+    server.put<{ Body: UpdateDealInput, Params: UpdateDealParams }>(
         '/updateDeals/:id',
         {
         preHandler: [isAuthenticated, isSeller],
@@ -50,9 +55,7 @@ const dealRoutes = async (server: FastifyInstance) => {
             response: {
                 201: z.array($ref('createDealResponseSchema')),
             },
-            // params: {
-            //     id: z.number(),
-            // },
+            params: paramsSchema,
         },
         },
         updateDealHandler

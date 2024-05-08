@@ -1,11 +1,9 @@
 
 import * as bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import prisma from "./prisma"
 
-import dotenv from 'dotenv';
-import { CreateMiddlewareInput } from '../modules/user/user.schema';
 import { DecodedToken } from '../interface/userInterface';
 // dotenv.config();
 
@@ -58,7 +56,7 @@ export const isAuthenticated = async (request: FastifyRequest, reply: FastifyRep
     }
 
     // Verify the JWT token
-   const verify = await verifyToken(token);
+   await verifyToken(token);
 
   } catch (error) {
     return reply.code(401).send({ error: 'Unauthorized: Invalid token' });

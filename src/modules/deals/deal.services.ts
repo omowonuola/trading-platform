@@ -103,17 +103,19 @@ export const updateDeal = async (id:number, input: UpdateDealInput & { sellerId:
       },
     },
   });
+  console.log(deal, 'deals')
 
     // Find the connected buyers for this deal
-    const connectedBuyers = await prisma.connection.findMany({
-        where: { sellerId: input.sellerId },
+    const connectedBuyers = await prisma.buyerSeller.findMany({
+        where: { sellerId: deal.sellerId },
         select: { buyerId: true },
-      });
+    });
+    console.log(connectedBuyers, 'buyers')
     
       const buyerIds = connectedBuyers.map((buyer:any) => buyer.buyerId);
-    
+      console.log(buyerIds, 'buyers')
       // Add a job to the queue to notify the connected buyers
-      await dealUpdatesQueue.add({ id, buyerIds, updateData: input });
-
+    const success = await dealUpdatesQueue.add({ dealId:deal.id, buyerIds, updateData: input });
+    console.log(success, 'here')
   return deal;
 };

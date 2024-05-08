@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { connectBuyerSellerHandler } from './buyer-seller.controller'
 import { $ref } from './buyer-seller.schema'
-import { isAuthenticated, isBuyer, isSeller } from '../../utilis/auth';
+import { isAuthenticated, isBuyer } from '../../utilis/auth';
 import { CreateConnectionBody } from '../../interface/userInterface';
 
 

@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { createDeal, getDealsByUserId, getDealsFromSeller, updateDeal } from './deal.services';
 import { CreateDealInput, UpdateDealInput } from './deal.schema';
-import { RequestWithUser, UpdateDealParams } from '../../interface/userInterface';
+import { UpdateDealParams } from '../../interface/userInterface';
 import { getUserId } from '../../utilis/auth';
 import { findSellerByEmail } from '../seller/seller.service';
 import { findBuyerByEmail } from '../buyer/buyer.service';
@@ -82,7 +82,13 @@ export const updateDealHandler = async (
   ) => {
     const body = request.body;
     const user = await getUserId(request, reply);
-    const sellerId = user.id;
+
+    const seller = await findSellerByEmail(user.email);
+
+    if (!seller) {
+        return reply.code(404).send({ error: 'Seller not found' });
+    }
+    const sellerId = seller.id;
     const id = request.params.id;
   
     try {

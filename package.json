@@ -1,12 +1,13 @@
 {
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts"
+    "dev": "tsnd --respawn --transpile-only --exit-child src/app.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.12.7",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "bull": "^4.12.2",
@@ -26,6 +27,7 @@
     "@eslint/js": "^9.1.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.12.10",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^8.57.0",

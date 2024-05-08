@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { createRole, findRoleByName, getAllRoles } from './role.service';
+import { createRole, getAllRoles } from './role.service';
 import { CreateRoleInput } from './role.schema';
 
 export const createRoleHandler = async ( request: FastifyRequest<{

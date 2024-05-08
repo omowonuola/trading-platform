@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "../../utilis/auth";
 import prisma from "../../utilis/prisma"
 import { CreateUserInput } from "./user.schema"

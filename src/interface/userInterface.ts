@@ -1,4 +1,4 @@
-import { FastifyRequest, RouteGenericInterface } from 'fastify';
+import { RouteGenericInterface } from 'fastify';
 import { CreateDealInput, UpdateDealInput } from '../modules/deals/deal.schema';
 import { CreateItemInput } from '../modules/item/item.schema';
 import { CreateConnectInput } from '../modules/buyer-seller/buyer-seller.schema';
@@ -24,7 +24,7 @@ export interface CreateItemBody extends RouteGenericInterface {
     Body: CreateItemInput;
 }
 
-export interface UpdateDealParams {
+export interface UpdateDealParams extends RouteGenericInterface {
     id: number;
 }
 
