@@ -40,6 +40,7 @@ model Buyer {
   id        Int   @id @default(autoincrement())
   name      String
   email     String   @unique
+  webhookUrl String @default("https://example.com/webhook")
   buyerSellers BuyerSeller[]
 }
 

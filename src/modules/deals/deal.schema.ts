@@ -64,15 +64,22 @@ const updateDealInputSchema = z.object({
       .optional(),
 });
 
+const dealUpdateJobSchema = z.object({
+    dealId: z.number(),
+    buyerIds: z.array(z.number()),
+    updateData: updateDealInputSchema
+  });
+
 
 export type CreateDealInput = z.infer<typeof createDealSchema>;
 export type UpdateDealInput = z.infer<typeof updateDealInputSchema>
-
+export type DealUpdateJobData = z.infer<typeof dealUpdateJobSchema>
 
 export const { schemas: dealSchemas, $ref } = buildJsonSchemas({
     createDealSchema,
     createDealResponseSchema,
-    updateDealInputSchema
+    updateDealInputSchema,
+    dealUpdateJobSchema
 }, 
     {
         $id: 'DealSchemas',

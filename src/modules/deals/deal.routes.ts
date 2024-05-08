@@ -40,7 +40,7 @@ const dealRoutes = async (server: FastifyInstance) => {
         },
     }, getDealsFromSellerHandler)
 
-    server.put<{ Body: UpdateDealBody, Params: { id: number } }>(
+    server.put<{ Body: UpdateDealBody, Params: UpdateDealParams }>(
         '/updateDeals/:id',
         {
         preHandler: [isAuthenticated, isSeller],
