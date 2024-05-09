@@ -2,12 +2,12 @@ import { z } from 'zod'
 import { buildJsonSchemas } from 'fastify-zod'
 
 
-enum DealStatus {
+export enum DealStatus {
     sold = 'sold',
     available = 'available',
 }
 
-enum DiscountType {
+export enum DiscountType {
     flat = 'flat',
     percentage = 'percentage',
 }

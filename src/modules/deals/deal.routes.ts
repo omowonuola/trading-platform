@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { createDealHandler, getDealsFromSellerHandler, getUserDealHandler, updateDealHandler } from './deal.controller'
 import { $ref, UpdateDealInput } from './deal.schema'
 import { isAuthenticated, isBuyer, isSeller } from '../../utilis/auth'
-import { CreateDealBody, UpdateDealBody, UpdateDealParams } from '../../interface/userInterface'
+import { CreateDealBody, UpdateDealParams } from '../../interface/userInterface'
 import z from 'zod';
 
 

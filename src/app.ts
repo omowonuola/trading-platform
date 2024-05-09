@@ -20,15 +20,18 @@ import connectRoutes from './modules/buyer-seller/buyer-seller.routes';
 dotenv.config();
 
 
-const server = Fastify();
 
-server.get('/healthcheck', async () => {
-    return { status: 'ok'}
-})
 
 const main = async () => {
 
-    for (const schema of [...userSchemas, ...roleSchemas, ...buyerSchemas, ...sellerSchemas, ...dealSchemas, ...itemSchemas, ...connectSchemas]) {
+    const server = Fastify();
+
+    server.get('/healthcheck', async () => {
+        return { status: 'ok'}
+    })
+
+    for (const schema of [...userSchemas, ...roleSchemas, ...buyerSchemas,
+         ...sellerSchemas, ...dealSchemas, ...itemSchemas, ...connectSchemas]) {
         server.addSchema(schema);
     }
 
@@ -51,3 +54,5 @@ const main = async () => {
 
 
 main()
+
+export default main;
