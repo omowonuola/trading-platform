@@ -55,10 +55,3 @@ export const getAllSellers = async (page: number, limit: number) => {
       limit,
     };
 };
-
-// export const getSellerEmail = async (email: string) => {
-//     return prisma.seller.findUnique({
-//         where: { email },
-//         select: { id: true }
-//       });
-// }
