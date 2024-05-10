@@ -19,6 +19,7 @@ describe("createBuyerProfile", () => {
   const mockInput: CreateBuyerInput = {
     email: "test@example.com",
     name: "Test Buyer",
+    webhookUrl: "https://example.com/webhook",
   };
 
   beforeEach(() => {

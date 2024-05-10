@@ -1,6 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { createBuyerProfile, getAllBuyers } from './buyer.service';
 import { CreateBuyerInput } from './buyer.schema';
+import { UpdateDealParams } from '../../interface/userInterface';
+import crypto from 'crypto';
+
 
 export const createBuyerHandler = async ( request: FastifyRequest<{
     Body: CreateBuyerInput
@@ -33,3 +36,20 @@ export const getAllBuyerHandler = async (
       reply.code(500).send(error);
     }
 };
+
+
+
+
+// export const generateBuyerWebhookUrl = async () => {
+
+//     try {
+//         const token = crypto.randomBytes(16).toString('hex');
+//         const webhookUrl = `https://${request.headers.host}/webhooks/${token}`;  
+        
+//         return reply.code(201).send(webhookUrl)
+//     } catch (error) {
+//         console.error(error);
+//         reply.code(500).send(error);
+//     }
+
+// };

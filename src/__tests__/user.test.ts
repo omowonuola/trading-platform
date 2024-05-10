@@ -44,6 +44,7 @@ jest.mock("../modules/user/user.service", () => ({
     const userWithProfile = await createBuyerProfile({
       email: input.email,
       name: input.name,
+      webhookUrl: "https://example.com/webhook",
     });
     return userWithProfile;
   }),

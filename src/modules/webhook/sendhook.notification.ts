@@ -7,7 +7,6 @@ export const sendWebhookNotification = async (
   dealId: number,
   updateData: UpdateDealInput
 ) => {
-  // Fetch the buyer's webhook URL from the database
   const buyer = await prisma.buyer.findUnique({
     where: { id: buyerId },
     select: { webhookUrl: true },
@@ -18,14 +17,12 @@ export const sendWebhookNotification = async (
     return;
   }
 
-  // Construct the webhook payload
   const payload = {
     dealId,
     updateData,
   };
 
   try {
-    // Send the webhook notification
     await axios.post(buyer.webhookUrl, payload, {
         headers: {
             'Content-Type': 'application/json',

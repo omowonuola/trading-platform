@@ -3,7 +3,6 @@ import dealUpdatesQueue from "../webhook/deal.updates.queue";
 import { CreateDealInput, UpdateDealInput } from "./deal.schema"
 
 
-
 export const createDeal = async (input: CreateDealInput & { sellerId: number }) => {
     
       // Check if a deal with the provided name already exists
@@ -78,7 +77,6 @@ export const findDealByName = async (name: string) => {
 export const updateDeal = async (id:number, input: UpdateDealInput & { sellerId: number }) => {
   const {name, currency, totalPrice, status, discount, items, sellerId } = input;
 
-    // Check if the deal exists and is owned by the authenticated seller
     const existingDeal = await prisma.deal.findUnique({
         where: { id },
         select: { sellerId: true },
@@ -104,14 +102,18 @@ export const updateDeal = async (id:number, input: UpdateDealInput & { sellerId:
     },
   });
 
-    // Find the connected buyers for this deal
     const connectedBuyers = await prisma.buyerSeller.findMany({
         where: { sellerId: deal.sellerId },
         select: { buyerId: true },
     });
     
       const buyerIds = connectedBuyers.map((buyer:any) => buyer.buyerId);
-      // Add a job to the queue to notify the connected buyers
     await dealUpdatesQueue.add({ dealId:deal.id, buyerIds, updateData: input });
   return deal;
 };
+
+
+
+
+
+

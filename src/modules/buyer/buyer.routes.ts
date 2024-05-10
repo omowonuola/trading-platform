@@ -3,6 +3,7 @@ import { createBuyerHandler, getAllBuyerHandler } from './buyer.controller'
 import { $ref } from './buyer.schema'
 
 
+
 const buyerRoutes = async (server: FastifyInstance) => {
     server.post('/', {
         schema: {
@@ -21,6 +22,7 @@ const buyerRoutes = async (server: FastifyInstance) => {
             },
         },
     }, getAllBuyerHandler)
+
 }
 
 export default buyerRoutes;

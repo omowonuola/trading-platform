@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv'
 import userRoutes from './modules/user/user.routes';
 import roleRoutes from './modules/role/role.routes';
 import { userSchemas } from './modules/user/user.schema';
@@ -18,8 +18,6 @@ import connectRoutes from './modules/buyer-seller/buyer-seller.routes';
 
 
 dotenv.config();
-
-
 
 
 const main = async () => {

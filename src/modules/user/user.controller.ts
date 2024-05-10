@@ -11,7 +11,6 @@ export const registerUserHandler = async ( request: FastifyRequest<{
 
     try {
         const user = await createUser(body)
-        console.log(user, 'here')
         return reply.code(201).send(user)
     } catch (error) {
         console.error(error)
@@ -26,7 +25,6 @@ export const loginHandler = async ( request: FastifyRequest<{
     
     const body = request.body;
 
-    // find a user by email
     const user = await findUserByEmail(body.email)
 
     if(!user) {
@@ -34,8 +32,6 @@ export const loginHandler = async ( request: FastifyRequest<{
             message: 'Invalid email or password'
         })
     }
-
-    // verfy password
 
     const correctPassword = await comparePasswords(
         body.password,
@@ -51,6 +47,5 @@ export const loginHandler = async ( request: FastifyRequest<{
     return reply.code(401).send({
         message: 'Invalid email or password'
     })
-    // generate access token
 
 }

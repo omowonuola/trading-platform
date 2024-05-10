@@ -5,9 +5,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import prisma from "./prisma"
 
 import { DecodedToken } from '../interface/userInterface';
-// dotenv.config();
 
-const SECRET_KEY = 'process.env.JWT_SECRET'
+const SECRET_KEY = `${process.env.JWT_SECRET}`
 
 
 
@@ -30,13 +29,10 @@ export const generateToken = (payload: object): string => {
   
 export const verifyToken = async (token: string): Promise<DecodedToken> => {
 try {
-    // Verify the token and decode the payload
     const decoded = jwt.verify(token, SECRET_KEY) as DecodedToken;
 
-    // Return the decoded payload
     return decoded;
 } catch (error) {
-    // Handle token verification errors
     if (error instanceof jwt.JsonWebTokenError) {
     throw new Error('Invalid token');
     } else {
@@ -45,17 +41,14 @@ try {
 }
 };
 
-// isAuthenticated middleware
 export const isAuthenticated = async (request: FastifyRequest, reply: FastifyReply): Promise<void>  => {
   try {
-    // Get the JWT token from the request headers
     const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) {
       return reply.code(401).send({ error: 'Unauthorized: No token provided' });
     }
 
-    // Verify the JWT token
    await verifyToken(token);
 
   } catch (error) {
@@ -65,14 +58,12 @@ export const isAuthenticated = async (request: FastifyRequest, reply: FastifyRep
 
 export const getUserId = async (request: FastifyRequest, reply: FastifyReply): Promise<any>  => {
     try {
-      // Get the JWT token from the request headers
       const token = request.headers.authorization?.split(' ')[1];
   
       if (!token) {
         return reply.code(401).send({ error: 'Unauthorized: No token provided' });
       }
   
-      // Verify the JWT token
      const verify = await verifyToken(token);
      return verify
      
@@ -82,17 +73,14 @@ export const getUserId = async (request: FastifyRequest, reply: FastifyReply): P
   };
 
 
-// isBuyer middleware
 export const isBuyer = async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
 
-    // Get the JWT token from the request headers
     const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) {
         return reply.code(401).send({ error: 'Unauthorized: No token provided' });
     }
 
-    // Verify the JWT token
     const decoded = await verifyToken(token) as DecodedToken;
     const id = decoded.id; 
 
@@ -115,14 +103,12 @@ export const isBuyer = async (request: FastifyRequest, reply: FastifyReply): Pro
 
 export const isSeller = async (request: FastifyRequest, reply: FastifyReply) => {
 
-    // Get the JWT token from the request headers
     const token = request.headers.authorization?.split(' ')[1];
 
     if (!token) {
         return reply.code(401).send({ error: 'Unauthorized: No token provided' });
     }
 
-    // Verify the JWT token
     const decoded = await verifyToken(token) as DecodedToken;
     const id = decoded.id; 
 
@@ -140,16 +126,3 @@ export const isSeller = async (request: FastifyRequest, reply: FastifyReply) => 
     return reply.code(403).send({ error: 'Forbidden: User is not a seller' });
   }
 };
-
-// Register the middleware
-// const authMiddleware = async (fastify: FastifyInstance) => {
-//   fastify.addHook('preHandler', isBuyer, {
-//     name: 'isBuyer',
-//   });
-
-//   fastify.addHook('preHandler', isSeller, {
-//     name: 'isSeller',
-//   });
-// };
-
-// export default authMiddleware;

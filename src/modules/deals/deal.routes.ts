@@ -7,7 +7,7 @@ import z from 'zod';
 
 
 
-const paramsSchema = {
+export const paramsSchema = {
     type: 'object',
     properties: {
       id: { type: 'number' },

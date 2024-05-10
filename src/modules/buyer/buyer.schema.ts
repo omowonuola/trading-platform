@@ -4,8 +4,9 @@ import { buildJsonSchemas } from 'fastify-zod'
 
 const createBuyerSchema = z.object({
     name: z.string(),
-    email: z.string()
-})
+    email: z.string(),
+    webhookUrl: z.union([z.string(), z.null()]),
+  });
 
 const createBuyerResponseSchema = z.object({
     id: z.number(),

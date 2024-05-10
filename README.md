@@ -43,7 +43,11 @@ You are now ready to launch the NestJS application using the command below.
 ```sh
 
 # Launch the development server with npm command
+
+npx prisma migrate dev --name init(prisma migration)
+
 npm run dev
+
 ```
 
 ## 2. Design Decisions
