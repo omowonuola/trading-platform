@@ -40,10 +40,6 @@ const createDealResponseSchema = z.object({
 })
 
 const dealUpdateParamsSchema = z.object({
-    // type: 'object',
-    // properties: {
-    //   id: { type: 'number' },
-    // },
     id: z.number(),
 });
 

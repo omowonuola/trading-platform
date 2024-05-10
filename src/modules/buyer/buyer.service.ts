@@ -10,11 +10,9 @@ export const createBuyerProfile = async (input: CreateBuyerInput) => {
 
     const { email, name, webhookUrl } = input;
 
-      // Check if a Buyer with the provided name already exists
     const existingBuyer = await findBuyerByEmail(email)
     
     if (existingBuyer) {
-        // Buyer with the provided name already exists
         throw new Error('Buyer with this email already exists');
     }
 

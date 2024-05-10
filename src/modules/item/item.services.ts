@@ -5,11 +5,9 @@ import { CreateItemInput } from "./item.schema"
 
 export const createItem = async (input: CreateItemInput) => {
 
-      // Check if a deal with the provided name already exists
     const existingItem = await findItemByName(input.name, input.price)
     
     if (existingItem) {
-        // deal with the provided name already exists
         throw new Error('Item with this name already exists');
     }
 

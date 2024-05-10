@@ -10,11 +10,9 @@ export const createRole = async (input: CreateRoleInput) => {
 
     const { name } = input;
 
-      // Check if a role with the provided name already exists
     const existingRole = await findRoleByName(name)
     
     if (existingRole) {
-        // role with the provided name already exists
         throw new Error('Role with this name already exists');
     }
 

@@ -12,11 +12,9 @@ export const createSellerProfile = async (input: CreateSellerInput) => {
 
     const { email, name } = input;
 
-      // Check if a seller with the provided name already exists
     const existingSeller = await findSellerByEmail(email)
     
     if (existingSeller) {
-        // Seller with the provided name already exists
         throw new Error('Seller with this email already exists');
     }
 

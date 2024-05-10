@@ -5,12 +5,10 @@ import { CreateDealInput, UpdateDealInput } from "./deal.schema"
 
 export const createDeal = async (input: CreateDealInput & { sellerId: number }) => {
     
-      // Check if a deal with the provided name already exists
     const existingDeal = await findDealByName(input.name)
     
     
     if (existingDeal) {
-        // deal with the provided name already exists
         throw new Error('Deal with this name already exists');
     }
     const deal = await prisma.deal.create({
@@ -42,7 +40,6 @@ export const getDealsByUserId = async (id: number) => {
 };
 
 export const getDealsFromSeller = async (buyerId: number) => {
-  // Fetch the seller IDs that the buyer is connected to
   const connectedSellers = await prisma.buyerSeller.findMany({
     where: { buyerId },
     select: { sellerId: true },
@@ -50,7 +47,6 @@ export const getDealsFromSeller = async (buyerId: number) => {
 
   const connectedSellerIds = connectedSellers.map((seller:any) => seller.sellerId);
 
-  // Fetch the deals where the sellerId matches the connected sellers
   const deals = await prisma.deal.findMany({
     where: {
       sellerId: {
